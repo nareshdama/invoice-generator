@@ -79,6 +79,36 @@ const loadHtml2Canvas = () =>
     document.head.appendChild(s);
   });
 
+const Section = ({ title, children }) => (
+  <div style={{
+    background: "var(--color-surface)",
+    borderRadius: "var(--radius-lg)",
+    padding: 20,
+    boxShadow: "var(--shadow-md)",
+    marginBottom: 20,
+  }}>
+    <h3 style={{
+      fontSize: 13,
+      fontWeight: 600,
+      color: "var(--color-text)",
+      margin: "0 0 16px 0",
+      letterSpacing: "0.02em",
+      display: "flex",
+      alignItems: "center",
+      gap: 8,
+    }}>
+      <span style={{
+        width: 4,
+        height: 18,
+        borderRadius: 2,
+        background: "var(--color-primary)",
+      }} />
+      {title}
+    </h3>
+    {children}
+  </div>
+);
+
 export default function App() {
   const receiptRef = useRef(null);
   const [store, setStore] = useState("Walmart");
@@ -197,9 +227,7 @@ export default function App() {
     boxSizing: "border-box",
     background: "var(--color-surface)",
     color: "var(--color-text)",
-    transition: "border-color var(--transition), box-shadow var(--transition)",
   };
-  const inputFocus = { borderColor: "var(--color-border-focus)", boxShadow: "0 0 0 3px var(--color-primary-muted)" };
   const lbl = (txt) => (
     <label style={{ fontSize: 11, color: "var(--color-text-muted)", marginBottom: 6, display: "block", fontWeight: 600, letterSpacing: "0.02em" }}>
       {txt}
@@ -311,41 +339,12 @@ export default function App() {
     </div>
   );
 
-  const Section = ({ title, children }) => (
-    <div style={{
-      background: "var(--color-surface)",
-      borderRadius: "var(--radius-lg)",
-      padding: 20,
-      boxShadow: "var(--shadow-md)",
-      marginBottom: 20,
-    }}>
-      <h3 style={{
-        fontSize: 13,
-        fontWeight: 600,
-        color: "var(--color-text)",
-        margin: "0 0 16px 0",
-        letterSpacing: "0.02em",
-        display: "flex",
-        alignItems: "center",
-        gap: 8,
-      }}>
-        <span style={{
-          width: 4,
-          height: 18,
-          borderRadius: 2,
-          background: "var(--color-primary)",
-        }} />
-        {title}
-      </h3>
-      {children}
-    </div>
-  );
-
   return (
     <div id="__receipt_root__" style={{
       minHeight: "100vh",
       background: "var(--color-bg)",
       padding: "24px 16px 40px",
+      contain: "layout",
     }}>
       {/* Printable receipt - direct child for print CSS */}
       <div id="__receipt_printable__" style={{ display: "none" }}>
@@ -420,32 +419,31 @@ export default function App() {
                 <div key={l}>
                   {lbl(l)}
                   <input
+                    className="input-field"
                     style={inputSt}
                     value={v}
                     onChange={(e) => s(e.target.value)}
-                    onFocus={(e) => Object.assign(e.target.style, inputFocus)}
-                    onBlur={(e) => { e.target.style.borderColor = ""; e.target.style.boxShadow = ""; }}
                   />
                 </div>
               ))}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                 <div>
                   {lbl("Date")}
-                  <input type="date" style={inputSt} value={date} onChange={(e) => setDate(e.target.value)} />
+                  <input type="date" className="input-field" style={inputSt} value={date} onChange={(e) => setDate(e.target.value)} />
                 </div>
                 <div>
                   {lbl("Time")}
-                  <input type="time" style={inputSt} value={time} onChange={(e) => setTime(e.target.value)} />
+                  <input type="time" className="input-field" style={inputSt} value={time} onChange={(e) => setTime(e.target.value)} />
                 </div>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14 }}>
                 <div>
                   {lbl("Tax %")}
-                  <input type="number" style={inputSt} value={taxRate} onChange={(e) => setTaxRate(parseFloat(e.target.value) || 0)} />
+                  <input type="number" className="input-field" style={inputSt} value={taxRate} onChange={(e) => setTaxRate(parseFloat(e.target.value) || 0)} />
                 </div>
                 <div>
                   {lbl("Payment")}
-                  <select style={inputSt} value={payMethod} onChange={(e) => setPayMethod(e.target.value)}>
+                  <select className="input-field" style={inputSt} value={payMethod} onChange={(e) => setPayMethod(e.target.value)}>
                     {PAY_METHODS.map((p) => (
                       <option key={p}>{p}</option>
                     ))}
@@ -453,7 +451,7 @@ export default function App() {
                 </div>
                 <div>
                   {lbl("Last 4")}
-                  <input style={inputSt} maxLength={4} value={cardLast4} onChange={(e) => setCardLast4(e.target.value)} placeholder="••••" />
+                  <input className="input-field" style={inputSt} maxLength={4} value={cardLast4} onChange={(e) => setCardLast4(e.target.value)} placeholder="••••" />
                 </div>
               </div>
             </div>
@@ -504,12 +502,11 @@ export default function App() {
                     alignItems: "center",
                     padding: "6px 0",
                     borderRadius: "var(--radius-sm)",
-                    transition: "background var(--transition)",
                   }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = "var(--color-primary-muted)"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+                  className="item-row-hover"
                 >
                   <select
+                    className="input-field"
                     style={{ ...inputSt, padding: "8px 8px", fontSize: 11 }}
                     value={item.dept}
                     onChange={(e) => upd(item.id, "dept", e.target.value)}
@@ -519,12 +516,14 @@ export default function App() {
                     ))}
                   </select>
                   <input
+                    className="input-field"
                     style={{ ...inputSt, padding: "8px 10px", fontSize: 12, textTransform: "uppercase" }}
                     value={item.name}
                     onChange={(e) => upd(item.id, "name", e.target.value)}
                   />
                   <input
                     type="number"
+                    className="input-field"
                     style={{ ...inputSt, padding: "8px 6px", fontSize: 12 }}
                     value={item.qty}
                     min={1}
@@ -532,12 +531,14 @@ export default function App() {
                   />
                   <input
                     type="number"
+                    className="input-field"
                     style={{ ...inputSt, padding: "8px 6px", fontSize: 12 }}
                     value={item.price}
                     step="0.01"
                     onChange={(e) => upd(item.id, "price", e.target.value)}
                   />
                   <select
+                    className="input-field"
                     style={{ ...inputSt, padding: "8px 4px", fontSize: 11 }}
                     value={item.tax}
                     onChange={(e) => upd(item.id, "tax", e.target.value)}
@@ -548,6 +549,7 @@ export default function App() {
                   </select>
                   <input
                     type="number"
+                    className="input-field"
                     style={{ ...inputSt, padding: "8px 6px", fontSize: 11 }}
                     value={item.save}
                     step="0.01"
@@ -586,7 +588,7 @@ export default function App() {
 
           <Section title="Footer">
             {lbl("Thank You Message")}
-            <input style={inputSt} value={footer} onChange={(e) => setFooter(e.target.value)} placeholder="THANK YOU FOR SHOPPING!" />
+            <input className="input-field" style={inputSt} value={footer} onChange={(e) => setFooter(e.target.value)} placeholder="THANK YOU FOR SHOPPING!" />
           </Section>
         </div>
 
@@ -596,8 +598,6 @@ export default function App() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          position: "sticky",
-          top: 24,
         }}>
           <div style={{
             fontSize: 13,
@@ -648,12 +648,10 @@ export default function App() {
               <span>Tax</span>
               <span>{fmt(tax)}</span>
             </div>
-            {totalSave > 0 && (
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8, fontSize: 13, color: "var(--color-success)" }}>
-                <span>You Saved</span>
-                <span>{fmt(totalSave)}</span>
-              </div>
-            )}
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8, fontSize: 13, color: totalSave > 0 ? "var(--color-success)" : "var(--color-text-muted)", minHeight: 20 }}>
+              <span>You Saved</span>
+              <span>{fmt(totalSave)}</span>
+            </div>
             <div style={{
               display: "flex",
               justifyContent: "space-between",
