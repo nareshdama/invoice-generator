@@ -1,27 +1,33 @@
-# Invoice Generator — Thermal Receipt Style
+# Invoice Generator — Walmart-Style Receipt
 
-A simple, editable invoice generator with thermal paper receipt–style output.
+A React-based receipt generator with Walmart-style thermal receipt layout.
 
 ## Features
 
-- **Editable content** — All fields update the receipt preview in real time
-- **Thermal receipt style** — 80mm width, monospace font, dashed borders
-- **Line items** — Add/remove items with quantity and price; totals auto-calculate
-- **Print** — Print directly or save as PDF via the browser print dialog
+- **Walmart-style layout** — Store header, ST# OP# TE# TR#, items grouped by department
+- **Editable content** — Store details, items (dept, name, qty, price, tax, save), payment
+- **Department grouping** — GROCERY, PRODUCE, DAIRY, HOUSEHOLD, etc.
+- **Tax codes** — N (none), X (taxable), O (other)
+- **Save/discount** — Per-item savings with "YOU SAVED TODAY" total
+- **Download JPG** — Export receipt as image via html2canvas
+- **Print / PDF** — Print or save as PDF via browser dialog
 
 ## How to Use
 
-1. Open `index.html` in a web browser (double-click or drag into Chrome/Edge/Firefox).
-2. Edit the form fields on the left — company, customer, items, etc.
-3. Use **+ Add Item** to add more line items; click **×** to remove.
-4. Click **Print Receipt** or **Save as PDF** — both open the print dialog.
-5. Choose your printer or **Save as PDF** as the destination.
+```bash
+npm install
+npm run dev
+```
 
-## Files
+1. Edit store details, date/time, tax %, payment method.
+2. Add/edit/remove items (dept, name, qty, price, tax code, save).
+3. Click **Download JPG** to export as image.
+4. Click **Print / Save PDF** — choose "Save as PDF" in the print dialog.
 
-- `index.html` — Main page with form and receipt preview
-- `styles.css` — Thermal receipt styling and layout
-- `script.js` — Live preview, totals, print handling
+## Tech
+
+- React 18 + Vite
+- html2canvas (loaded from CDN for JPG export)
 
 ## Thermal Printer Tips
 

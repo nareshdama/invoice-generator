@@ -3,85 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Invoice Generator - Thermal Receipt</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Walmart-Style Receipt Generator</title>
 </head>
 <body>
-  <div class="app">
-    <!-- Editor Panel -->
-    <aside class="editor-panel no-print">
-      <header class="panel-header">
-        <h1>Invoice Editor</h1>
-        <p>Edit fields below — receipt preview updates live</p>
-      </header>
-
-      <section class="form-section">
-        <h2>Store / Company</h2>
-        <input type="text" id="companyName" placeholder="Company Name" value="MY STORE">
-        <input type="text" id="companyAddress" placeholder="Address" value="123 Main Street">
-        <input type="text" id="companyPhone" placeholder="Phone" value="(555) 123-4567">
-      </section>
-
-      <section class="form-section">
-        <h2>Invoice Details</h2>
-        <div class="row">
-          <label>Invoice #</label>
-          <input type="text" id="invoiceNumber" placeholder="INV-001" value="INV-001">
-        </div>
-        <div class="row">
-          <label>Date</label>
-          <input type="text" id="invoiceDate" placeholder="Feb 24, 2025" value="Feb 24, 2025">
-        </div>
-      </section>
-
-      <section class="form-section">
-        <h2>Customer</h2>
-        <input type="text" id="customerName" placeholder="Customer Name" value="John Doe">
-        <input type="text" id="customerAddress" placeholder="Address" value="">
-      </section>
-
-      <section class="form-section">
-        <h2>Line Items</h2>
-        <div id="lineItems">
-          <div class="line-item" data-index="0">
-            <input type="text" class="item-desc" placeholder="Description" value="Product A">
-            <input type="number" class="item-qty" placeholder="Qty" value="2" min="0" step="1">
-            <input type="number" class="item-price" placeholder="Price" value="10.00" min="0" step="0.01">
-            <button type="button" class="btn-remove" title="Remove item">×</button>
-          </div>
-          <div class="line-item" data-index="1">
-            <input type="text" class="item-desc" placeholder="Description" value="Product B">
-            <input type="number" class="item-qty" placeholder="Qty" value="1" min="0" step="1">
-            <input type="number" class="item-price" placeholder="Price" value="25.00" min="0" step="0.01">
-            <button type="button" class="btn-remove" title="Remove item">×</button>
-          </div>
-        </div>
-        <button type="button" class="btn btn-secondary" id="addItem">+ Add Item</button>
-      </section>
-
-      <section class="form-section">
-        <h2>Footer / Notes</h2>
-        <textarea id="footerNote" placeholder="Thank you for your business!" rows="2">Thank you for your business!</textarea>
-      </section>
-
-      <div class="actions">
-        <button type="button" class="btn btn-primary" id="printBtn">Print Receipt</button>
-        <button type="button" class="btn btn-secondary" id="pdfBtn" title="Opens print dialog — choose 'Save as PDF' as destination">Save as PDF</button>
-      </div>
-    </aside>
-
-    <!-- Receipt Preview -->
-    <main class="preview-area no-print">
-      <h2 class="preview-label">Preview</h2>
-      <div id="receiptWrapper">
-        <div id="receipt" class="receipt"></div>
-      </div>
-    </main>
-
-    <!-- Print-only receipt (hidden until print) -->
-    <div id="printReceipt" class="receipt print-only"></div>
-  </div>
-
-  <script src="script.js"></script>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
